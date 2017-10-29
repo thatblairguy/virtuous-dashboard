@@ -2,13 +2,43 @@
 <html>
 <head>
 <title>Widgety, widgety, widgety</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$('#btnLogin').on('click', doLogin);
+	});
+
+	// action="https://api.virtuoussoftware.com/Token" method="POST"
+
+	function doLogin(event) {
+
+		// Prevent the button from submitting the form
+		event.preventDefault();
+
+		var grantType = $('#grant_type').val();
+		var userId = $('#email').val();
+		var password=$('#password').val();
+
+		var data = "grant_type=" + grantType + "&username=" + userId + "&password=" + password;
+
+		//alert("KaPwing!\n" + data);
+		$.post("https://api.virtuoussoftware.com/Token", data)
+			.done(function success(results) {
+				alert('succeed');
+			})
+			.fail(function failure(results){
+				alert('fail');
+			});
+	}
+
+</script>
 </head>
 <body>
-	<form action="https://api.virtuoussoftware.com/Token" method="POST">
-		<input type="text" name="grant_type" value="password" /><br>
-		<input type="text" name="email" value="" /><br>
-		<input type="text" name="password" value="" /><br>
-		<button type="submit">Login</button>
+	<form id="loginForm">
+		<input type="text" id="grant_type" name="grant_type" value="password" /><br>
+		<input type="text" id="email" name="email" value="" /><br>
+		<input type="text" id="password" name="password" value="" /><br>
+		<button id="btnLogin">Login</button>
 	</form>
 </body>
 </html>
