@@ -27,15 +27,30 @@
 				alert('succeed');
 			})
 			.fail(function failure(results){
-				alert('fail');
+				reportError(results);
 			});
 	}
 
+	function reportError(errorData) {
+		$('#statusDisplay').html(
+			"Error: " + errorData.status + " " + errorData.statusText + "<br>"
+				+ errorData.responseJSON.error
+		);
+	}
+
 </script>
+<style>
+	#statusDisplay {
+		border: 1px #0000ff solid;
+		height: 5em;
+	}
+</style>
 </head>
 <body>
+	<div id="statusDisplay"></div>
+
 	<form id="loginForm">
-		<input type="text" id="grant_type" name="grant_type" value="password" /><br>
+		<input type="hidden" id="grant_type" name="grant_type" value="password" /><br>
 		<input type="text" id="email" name="email" value="" /><br>
 		<input type="text" id="password" name="password" value="" /><br>
 		<button id="btnLogin">Login</button>
